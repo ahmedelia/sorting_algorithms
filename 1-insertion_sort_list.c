@@ -1,27 +1,38 @@
 #include "sort.h"
 
 /**
- * rep_node - swap node
+ * add_node - swap node
  * @x: first node
- * @y: second node
  * @list: actual list
  * Return: void
  */
-void rep_node(listint_t **list, listint_t *x, listint_t *y)
+void add_node(listint_t **list, listint_t *x)
 {
-	if (!x || !y)
+	listint_t *curr = *list;
+
+
+	if (x->n < curr->n)
+	{
+		x->prev = NULL;
+		x->next = curr;
+		curr->prev = x;
+		*list = x;
 		return;
-	if (y->prev)
-		y->prev = x->prev;
-	if (y->next)
-		(y->next)->prev = x;
-	if (x->prev)
-		(x->prev)->next = y;
-	else
-		*list = y;
-	x->prev = y;
-	x->next = y->next;
-	y->next = x;
+	}
+	while (curr->next)
+	{
+		if (x->n < curr->n)
+		{
+			x->next = curr;
+			x->prev = curr->prev;
+			curr->prev = x;
+			return;
+		}
+	}
+	curr->next = x;
+	x->next = NULL;
+	x->prev = curr;
+	return;
 
 }
 /**
@@ -33,37 +44,16 @@ void rep_node(listint_t **list, listint_t *x, listint_t *y)
 
 void insertion_sort_list(listint_t **list)
 {
-	size_t size = 0, i = 0, j, flag = 0;
-	listint_t *curr = *list, *tmp;
+	listint_t *curr = *list, *sortedlist = *list;
 
-	if (list == NULL)
+
+	if (!curr)
 		return;
 	while (curr)
 	{
-		++size;
 		curr = curr->next;
+		add_node(&sortedlist, curr);
 	}
-	curr = *list;
-	while (curr)
-	{
-		if (flag)
-		{
-			i++;
-			curr = curr->next;
-		}
-		tmp = *list;
-		flag = 1;
-		for (j = 0; j <= i; j++)
-		{
-			if (!tmp->next)
-				break;
-			if (tmp->n > tmp->next->n)
-			{
-				rep_node(list, tmp, tmp->next);
-				print_list(*list);
-				flag = 0;
-			}
-			tmp = tmp->next;
-		}
-	}
+
+
 }
