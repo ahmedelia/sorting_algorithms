@@ -69,7 +69,7 @@ void quick(int *arr, size_t n, int low, int high)
 {
 	int pivot;
 
-	if (low >= high)
+	if (low > high)
 		return;
 	pivot = partition(arr, n, low, high);
 	quick(arr, n, pivot + 1, high);
@@ -84,7 +84,7 @@ void quick(int *arr, size_t n, int low, int high)
 
 void quick_sort(int *arr, size_t n)
 {
-	if (!arr || n < 2)
+	if (!arr || n <= 1)
 		return;
 	quick(arr, n, 0, n - 1);
 
