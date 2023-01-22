@@ -84,6 +84,8 @@ void quick(int *arr, size_t n, int low, int high)
 
 void quick_sort(int *arr, size_t n)
 {
+	if (!arr || n < 2)
+		return;
 	quick(arr, n, 0, n - 1);
 
 }
