@@ -26,36 +26,23 @@ void swap(int *a, int *b)
 
 int partition(int *arr, size_t n, int low, int high)
 {
-	int i = low, j = low + 1;
+	int curr = low, i, pivot = arr[high];
 
 
-	while (j < high)
+	for (i = low; i < high; i++)
 	{
-		if (i == j)
-			j++;
-		if (arr[i] <= arr[high])
-			i++;
-		else
+		if (pivot > arr[i])
 		{
-			if (arr[j] <= arr[high])
-			{
-				swap(&arr[i], &arr[j]);
+			swap(&arr[i], &arr[curr]);
+			if (arr[i] != arr[curr])
 				print_array(arr, n);
-				i++;
-				j++;
-			}
-			else
-			{
-				j++;
-			}
+			curr++;
 		}
 	}
-	if (i != high)
-	{
-		swap(&arr[i], &arr[high]);
+	swap(&arr[curr], &arr[high]);
+	if (arr[curr] != arr[high])
 		print_array(arr, n);
-	}
-	return (i);
+	return (curr);
 }
 /**
  * quick - helping func
