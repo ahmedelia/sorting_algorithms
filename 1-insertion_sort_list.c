@@ -33,46 +33,30 @@ void rep_node(listint_t **list, listint_t *x, listint_t *y)
 
 void insertion_sort_list(listint_t **list)
 {
-	size_t size = 0, i = 0, j, flag = 0;
-	listint_t *curr = *list, *tmp;
+	listint_t *curr = *list;
 
 	if (list == NULL || !(*list))
 		return;
-	while (curr)
+
+	while (curr->next)
 	{
-		++size;
-		curr = curr->next;
-	}
-	curr = *list;
-	while (curr)
-	{
-		if (flag)
+		if (curr->n > curr->next->n)
 		{
-			i++;
-			curr = curr->next;
-		}
-		tmp = *list;
-		flag = 1;
-		for (j = 0; j <= i; j++)
-		{
-			if (!tmp->next)
-				break;
-			if (tmp->n > tmp->next->n)
+			rep_node(list, curr, curr->next);
+			print_list(*list);
+			curr = curr->prev;
+			if (curr->prev && curr->prev->n > curr->n)
 			{
-				rep_node(list, tmp, tmp->next);
-				print_list(*list);
-				flag = 0;
-				
-				if (tmp->prev && tmp->prev->n > tmp->n)
-				{
-					tmp = tmp->prev;
-				}
-				else
-				{
-					tmp = tmp->next;
-				}
+				curr = curr->prev;
 			}
-			
+			else
+			{
+				curr = curr->next;
+			}
+		}
+		else
+		{
+			curr = curr->next;
 		}
 	}
 }
