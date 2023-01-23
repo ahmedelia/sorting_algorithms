@@ -62,8 +62,17 @@ void insertion_sort_list(listint_t **list)
 				rep_node(list, tmp, tmp->next);
 				print_list(*list);
 				flag = 0;
+				
+				if (tmp->prev && tmp->prev->n > tmp->n)
+				{
+					tmp = tmp->prev;
+				}
+				else
+				{
+					tmp = tmp->next;
+				}
 			}
-			tmp = tmp->next;
+			
 		}
 	}
 }
